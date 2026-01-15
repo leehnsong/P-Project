@@ -17,7 +17,7 @@ The model is trained on the VisDrone dataset and provides accurate detection per
 
 ---
 
-## 📥 Download Model Weights (Important)
+## 📥 Download Model Weights
 
 You can download the YOLOv8 VisDrone model from HuggingFace:
 
