@@ -26,4 +26,14 @@ https://huggingface.co/Mahadih534/YoloV8-VisDrone
 
 After downloading, place the file inside the `weights/` directory.
 
+---
+
+## 📊 Results
+
+Here are the visual results of the Parking Slot Detection system. The model effectively identifies vehicle types and maps them to predefined parking areas to determine occupancy.
+
+| | |
+|:---:|:---:|
+| ![Result 1](./images/result1.png) | ![Result 2](./images/result2.png) |
+| ![Result 3](./images/result3.png) | ![Result 4](./images/result4.png) |
 
