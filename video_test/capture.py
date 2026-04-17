@@ -20,7 +20,7 @@ for file in video_files:
 
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
-        print(f"❌ Cannot open {file}")
+        print(f"Cannot open {file}")
         continue
 
     fps = cap.get(cv2.CAP_PROP_FPS)          # frame per second
@@ -30,7 +30,7 @@ for file in video_files:
     ret, frame = cap.read()
 
     if not ret:
-        print(f"❌ Failed to capture frame from {file}")
+        print(f"Failed to capture frame from {file}")
         continue
 
     # 저장 파일명: partition1_image.png …
@@ -38,6 +38,6 @@ for file in video_files:
     save_path = os.path.join(output_dir, output_name)
 
     cv2.imwrite(save_path, frame)
-    print(f"✅ Saved {save_path}")
+    print(f"Saved {save_path}")
 
     cap.release()
