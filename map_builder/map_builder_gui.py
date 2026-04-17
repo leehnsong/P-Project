@@ -5,8 +5,8 @@ import math
 
 # ================= 설정 =================
 # 도면 전체 크기 (가로 393, 세로 852) (처음에 만들었던 map의 크기와 동일)
-CANVAS_WIDTH = 393
-CANVAS_HEIGHT = 852
+CANVAS_WIDTH = 864
+CANVAS_HEIGHT = 480
 
 # 저장될 JSON 파일 이름
 OUTPUT_JSON_PATH = "custom_rotated_slots.json"
@@ -149,14 +149,32 @@ def main():
                 last_selected_idx = -1
                 print("삭제 완료")
         elif key == ord('s'):  # JSON 저장
-            # 회전된 사각형의 4개 점(points)을 모두 저장하도록 포맷 구성
             output_data = []
             for i, slot in enumerate(slots):
+                # 회전된 4개 점을 가져옴
                 pts = get_rotated_rect_points(slot['cx'], slot['cy'], slot['w'], slot['h'], slot['angle'])
+                
+                # 서버 코드 형식에 맞게 p1(좌상단), p2(우하단) 추출
+                # (회전된 사각형을 감싸는 최소한의 직사각형 좌표)
+                x_coords = pts[:, 0]
+                y_coords = pts[:, 1]
+                p1 = [float(np.min(x_coords)), float(np.min(y_coords))]
+                p2 = [float(np.max(x_coords)), float(np.max(y_coords))]
+                
                 output_data.append({
                     "slot": i + 1,
-                    "points": pts.tolist()  # [[x1,y1], [x2,y2], [x3,y3], [x4,y4]]
+                    "p1": p1,
+                    "p2": p2
                 })
+        #elif key == ord('s'):  # JSON 저장
+            # 회전된 사각형의 4개 점(points)을 모두 저장하도록 포맷 구성
+            #output_data = []
+            #for i, slot in enumerate(slots):
+                #pts = get_rotated_rect_points(slot['cx'], slot['cy'], slot['w'], slot['h'], slot['angle'])
+                #output_data.append({
+                    #"slot": i + 1,
+                    #"points": pts.tolist()  # [[x1,y1], [x2,y2], [x3,y3], [x4,y4]]
+                #})
             
             with open(OUTPUT_JSON_PATH, "w", encoding="utf-8") as f:
                 json.dump(output_data, f, indent=4)
