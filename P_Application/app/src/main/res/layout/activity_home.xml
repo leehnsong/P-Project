@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@color/brand_background"
     android:padding="20dp"
-    android:weightSum="2">
+    android:weightSum="3">
 
     <!-- [상단] 주차 현황 확인하기 버튼 영역 -->
     <androidx.cardview.widget.CardView
@@ -56,6 +56,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="4dp"
         app:cardBackgroundColor="@color/white">
@@ -151,4 +152,42 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <!-- [하단] 맵 빌더 진입 영역 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnGoToMapBuilder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주차장 맵 빌더"
+                android:textColor="@color/brand_primary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="지도 위에 슬롯을 드래그해서&#10;서버용 JSON을 생성"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
 </LinearLayout>

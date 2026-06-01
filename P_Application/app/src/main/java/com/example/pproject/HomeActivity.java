@@ -26,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
 
     // UI 컴포넌트 선언
     private TextView tvHomeAvailable, tvHomeOccupied, tvLastUpdate;
-    private View btnGoToMap;
+    private View btnGoToMap, btnGoToMapBuilder;
 
     // 5초 자동 갱신을 위한 핸들러
     private Handler handler = new Handler(Looper.getMainLooper());
@@ -43,10 +43,16 @@ public class HomeActivity extends AppCompatActivity {
         tvHomeOccupied = findViewById(R.id.tvHomeOccupied);
         tvLastUpdate = findViewById(R.id.tvLastUpdate);
         btnGoToMap = findViewById(R.id.btnGoToMap);
+        btnGoToMapBuilder = findViewById(R.id.btnGoToMapBuilder);
 
         // [주차 현황 확인하기] 버튼 클릭 리스너 -> 지도 화면으로 이동
         btnGoToMap.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, ParkingMapActivity.class);
+            startActivity(intent);
+        });
+
+        btnGoToMapBuilder.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, MapBuilderActivity.class);
             startActivity(intent);
         });
 
