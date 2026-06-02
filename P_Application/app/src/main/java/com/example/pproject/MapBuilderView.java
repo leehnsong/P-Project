@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.DrawableRes;
+import androidx.core.content.ContextCompat;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -83,15 +84,15 @@ public class MapBuilderView extends View {
 
         normalPaint.setStyle(Paint.Style.STROKE);
         normalPaint.setStrokeWidth(3f);
-        normalPaint.setColor(Color.rgb(213, 0, 0));
+        normalPaint.setColor(ContextCompat.getColor(getContext(), R.color.parking_occupied));
 
         disabledPaint.setStyle(Paint.Style.STROKE);
         disabledPaint.setStrokeWidth(3f);
-        disabledPaint.setColor(Color.rgb(25, 118, 210));
+        disabledPaint.setColor(ContextCompat.getColor(getContext(), R.color.parking_disabled));
 
         selectedPaint.setStyle(Paint.Style.STROKE);
         selectedPaint.setStrokeWidth(5f);
-        selectedPaint.setColor(Color.rgb(0, 180, 90));
+        selectedPaint.setColor(ContextCompat.getColor(getContext(), R.color.brand_primary));
 
         textPaint.setColor(Color.WHITE);
         textPaint.setTextAlign(Paint.Align.CENTER);
@@ -284,7 +285,9 @@ public class MapBuilderView extends View {
         path.close();
 
         fillPaint.setStyle(Paint.Style.FILL);
-        fillPaint.setColor(slot.disabled ? Color.rgb(25, 118, 210) : Color.rgb(213, 0, 0));
+        fillPaint.setColor(slot.disabled
+                ? ContextCompat.getColor(getContext(), R.color.parking_disabled)
+                : ContextCompat.getColor(getContext(), R.color.parking_occupied));
         fillPaint.setAlpha(selected ? 120 : 70);
         canvas.drawPath(path, fillPaint);
         canvas.drawPath(path, slot.disabled ? disabledPaint : normalPaint);
@@ -293,6 +296,7 @@ public class MapBuilderView extends View {
         }
 
         PointF center = bitmapToView(slot.cx, slot.cy);
+        textPaint.setColor(slot.disabled ? Color.BLACK : Color.WHITE);
         canvas.drawText(String.valueOf(slot.slotNumber), center.x, center.y + 8f, textPaint);
     }
 
