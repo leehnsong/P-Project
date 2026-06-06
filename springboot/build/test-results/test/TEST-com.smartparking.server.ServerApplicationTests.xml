@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.smartparking.server.ServerApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-06-05T10:11:26.954Z" hostname="DESKTOP-6B5BFC0" time="0.501">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.smartparking.server.ServerApplicationTests" time="0.501"/>
+  <system-out><![CDATA[19:11:18.200 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.smartparking.server.ServerApplicationTests]: ServerApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:11:18.353 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.smartparking.server.ServerApplication for test class com.smartparking.server.ServerApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.0)
+
+2026-06-05T19:11:18.906+09:00  INFO 197754 --- [    Test worker] c.s.server.ServerApplicationTests        : Starting ServerApplicationTests using Java 17.0.19 with PID 197754 (started by taemin in /home/taemin/P-Project/springboot)
+2026-06-05T19:11:18.909+09:00  INFO 197754 --- [    Test worker] c.s.server.ServerApplicationTests        : No active profile set, falling back to 1 default profile: "default"
+2026-06-05T19:11:20.110+09:00  INFO 197754 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-05T19:11:20.310+09:00  INFO 197754 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 185 ms. Found 7 JPA repository interfaces.
+2026-06-05T19:11:21.132+09:00  INFO 197754 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-05T19:11:21.211+09:00  INFO 197754 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 7.1.8.Final
+2026-06-05T19:11:21.874+09:00  INFO 197754 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-05T19:11:21.915+09:00  INFO 197754 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-05T19:11:22.123+09:00  INFO 197754 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-06-05T19:11:22.126+09:00  INFO 197754 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-05T19:11:22.200+09:00  INFO 197754 --- [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:testdb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: TESTDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DatasourceConnectionProviderImpl
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-05T19:11:23.611+09:00  INFO 197754 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-05T19:11:23.775+09:00  INFO 197754 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-05T19:11:23.911+09:00  INFO 197754 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-05T19:11:24.777+09:00  WARN 197754 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-05T19:11:24.971+09:00  WARN 197754 --- [    Test worker] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 3dbb59d2-0482-46fe-9a68-447eb51c9290
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-06-05T19:11:24.982+09:00  INFO 197754 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-06-05T19:11:25.332+09:00  INFO 197754 --- [    Test worker] o.s.b.w.a.WelcomePageHandlerMapping      : Adding welcome page: class path resource [static/index.html]
+2026-06-05T19:11:26.127+09:00  INFO 197754 --- [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-06-05T19:11:26.236+09:00  INFO 197754 --- [    Test worker] c.s.server.ServerApplicationTests        : Started ServerApplicationTests in 7.709 seconds (process running for 9.548)
+2026-06-05T19:11:26.670+09:00 ERROR 197754 --- [   scheduling-1] c.s.server.service.ParkingStatusService  : YOLO 서버로부터 상태를 가져오지 못함.
+
+org.springframework.web.reactive.function.client.WebClientRequestException: finishConnect(..) failed with error(-111): Connection refused: localhost/127.0.0.1:8000
+	at org.springframework.web.reactive.function.client.ExchangeFunctions$DefaultExchangeFunction.lambda$wrapException$0(ExchangeFunctions.java:137) ~[spring-webflux-7.0.1.jar:7.0.1]
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	*__checkpoint ⇢ Request to GET http://localhost:8000/status [DefaultWebClient]
+Original Stack Trace:
+		at org.springframework.web.reactive.function.client.ExchangeFunctions$DefaultExchangeFunction.lambda$wrapException$0(ExchangeFunctions.java:137) ~[spring-webflux-7.0.1.jar:7.0.1]
+		at reactor.core.publisher.MonoErrorSupplied.subscribe(MonoErrorSupplied.java:56) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4569) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:104) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxPeek$PeekSubscriber.onError(FluxPeek.java:225) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxPeek$PeekSubscriber.onError(FluxPeek.java:225) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxPeek$PeekSubscriber.onError(FluxPeek.java:225) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.MonoNext$NextSubscriber.onError(MonoNext.java:94) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.MonoFlatMapMany$FlatMapManyMain.onError(MonoFlatMapMany.java:207) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.SerializedSubscriber.onError(SerializedSubscriber.java:125) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxRetryWhen$RetryWhenMainSubscriber.whenError(FluxRetryWhen.java:230) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxRetryWhen$RetryWhenOtherSubscriber.onError(FluxRetryWhen.java:282) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.onError(FluxContextWrite.java:123) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxConcatMapNoPrefetch$FluxConcatMapNoPrefetchSubscriber.maybeOnError(FluxConcatMapNoPrefetch.java:327) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxConcatMapNoPrefetch$FluxConcatMapNoPrefetchSubscriber.onNext(FluxConcatMapNoPrefetch.java:212) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.onNext(FluxContextWrite.java:109) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.SinkManyEmitterProcessor.drain(SinkManyEmitterProcessor.java:483) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.SinkManyEmitterProcessor$EmitterInner.drainParent(SinkManyEmitterProcessor.java:627) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxPublish$PubSubInner.request(FluxPublish.java:881) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.request(FluxContextWrite.java:138) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxConcatMapNoPrefetch$FluxConcatMapNoPrefetchSubscriber.request(FluxConcatMapNoPrefetch.java:337) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.request(FluxContextWrite.java:138) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.Operators$DeferredSubscription.request(Operators.java:1740) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxRetryWhen$RetryWhenMainSubscriber.onError(FluxRetryWhen.java:197) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.MonoCreate$DefaultMonoSink.error(MonoCreate.java:208) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.netty.http.client.HttpClientConnect$MonoHttpConnect$ClientTransportSubscriber.onError(HttpClientConnect.java:335) ~[reactor-netty-http-1.3.0.jar:1.3.0]
+		at reactor.core.publisher.MonoCreate$DefaultMonoSink.error(MonoCreate.java:208) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.netty.resources.DefaultPooledConnectionProvider$DisposableAcquire.onError(DefaultPooledConnectionProvider.java:182) ~[reactor-netty-core-1.3.0.jar:1.3.0]
+		at reactor.netty.internal.shaded.reactor.pool.AbstractPool$Borrower.fail(AbstractPool.java:478) ~[reactor-netty-core-1.3.0.jar:1.3.0]
+		at reactor.netty.internal.shaded.reactor.pool.SimpleDequePool.lambda$drainLoop$9(SimpleDequePool.java:444) ~[reactor-netty-core-1.3.0.jar:1.3.0]
+		at reactor.core.publisher.FluxDoOnEach$DoOnEachSubscriber.onError(FluxDoOnEach.java:186) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.MonoCreate$DefaultMonoSink.error(MonoCreate.java:208) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.netty.resources.DefaultPooledConnectionProvider$PooledConnectionAllocator$PooledConnectionInitializer.onError(DefaultPooledConnectionProvider.java:605) ~[reactor-netty-core-1.3.0.jar:1.3.0]
+		at reactor.core.publisher.MonoFlatMap$FlatMapMain.secondError(MonoFlatMap.java:242) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.MonoFlatMap$FlatMapInner.onError(MonoFlatMap.java:317) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:107) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.Operators.error(Operators.java:198) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.MonoError.subscribe(MonoError.java:54) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4569) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:104) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.netty.transport.TransportConnector$MonoChannelPromise.tryFailure(TransportConnector.java:604) ~[reactor-netty-core-1.3.0.jar:1.3.0]
+		at reactor.netty.transport.TransportConnector$MonoChannelPromise.setFailure(TransportConnector.java:550) ~[reactor-netty-core-1.3.0.jar:1.3.0]
+		at reactor.netty.transport.TransportConnector.lambda$doConnect$7(TransportConnector.java:263) ~[reactor-netty-core-1.3.0.jar:1.3.0]
+		at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:604) ~[netty-common-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners0(DefaultPromise.java:597) ~[netty-common-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:573) ~[netty-common-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:506) ~[netty-common-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:650) ~[netty-common-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:643) ~[netty-common-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:132) ~[netty-common-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.channel.epoll.AbstractEpollChannel$AbstractEpollUnsafe.fulfillConnectPromise(AbstractEpollChannel.java:728) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.channel.epoll.AbstractEpollChannel$AbstractEpollUnsafe.finishConnect(AbstractEpollChannel.java:747) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.channel.epoll.AbstractEpollChannel$AbstractEpollUnsafe.epollOutReady(AbstractEpollChannel.java:611) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.channel.epoll.AbstractEpollChannel$AbstractEpollUnsafe.handle(AbstractEpollChannel.java:472) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.channel.epoll.EpollIoHandler$DefaultEpollIoRegistration.handle(EpollIoHandler.java:317) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.channel.epoll.EpollIoHandler.processReady(EpollIoHandler.java:515) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.channel.epoll.EpollIoHandler.run(EpollIoHandler.java:460) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:225) ~[netty-transport-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:196) ~[netty-transport-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1193) ~[netty-common-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.7.Final.jar:4.2.7.Final]
+		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.7.Final.jar:4.2.7.Final]
+		at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+	Suppressed: java.lang.Exception: #block terminated with an error
+		at reactor.core.publisher.BlockingSingleSubscriber.blockingGet(BlockingSingleSubscriber.java:104) ~[reactor-core-3.8.0.jar:3.8.0]
+		at reactor.core.publisher.Mono.block(Mono.java:1773) ~[reactor-core-3.8.0.jar:3.8.0]
+		at com.smartparking.server.service.ParkingStatusService.updateStatus(ParkingStatusService.java:34) ~[main/:na]
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+		at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+		at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+		at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:128) ~[spring-context-7.0.1.jar:7.0.1]
+		at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$1(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.1.jar:7.0.1]
+		at io.micrometer.observation.Observation.observe(Observation.java:499) ~[micrometer-observation-1.16.0.jar:1.16.0]
+		at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.1.jar:7.0.1]
+		at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:88) ~[spring-context-7.0.1.jar:7.0.1]
+		at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-7.0.1.jar:7.0.1]
+		at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
+		at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:305) ~[na:na]
+		at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305) ~[na:na]
+		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+		at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: io.netty.channel.AbstractChannel$AnnotatedConnectException: finishConnect(..) failed with error(-111): Connection refused: localhost/127.0.0.1:8000
+Caused by: java.net.ConnectException: finishConnect(..) failed with error(-111): Connection refused
+	at io.netty.channel.unix.Errors.newConnectException0(Errors.java:166) ~[netty-transport-native-unix-common-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.channel.unix.Errors.handleConnectErrno(Errors.java:131) ~[netty-transport-native-unix-common-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.channel.unix.Socket.finishConnect(Socket.java:361) ~[netty-transport-native-unix-common-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.channel.epoll.AbstractEpollChannel$AbstractEpollUnsafe.doFinishConnect(AbstractEpollChannel.java:764) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.channel.epoll.AbstractEpollChannel$AbstractEpollUnsafe.finishConnect(AbstractEpollChannel.java:741) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.channel.epoll.AbstractEpollChannel$AbstractEpollUnsafe.epollOutReady(AbstractEpollChannel.java:611) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.channel.epoll.AbstractEpollChannel$AbstractEpollUnsafe.handle(AbstractEpollChannel.java:472) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.channel.epoll.EpollIoHandler$DefaultEpollIoRegistration.handle(EpollIoHandler.java:317) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.channel.epoll.EpollIoHandler.processReady(EpollIoHandler.java:515) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.channel.epoll.EpollIoHandler.run(EpollIoHandler.java:460) ~[netty-transport-classes-epoll-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:225) ~[netty-transport-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:196) ~[netty-transport-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1193) ~[netty-common-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.7.Final.jar:4.2.7.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.7.Final.jar:4.2.7.Final]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2026-06-05T19:11:26.920+09:00  INFO 197754 --- [    Test worker] c.s.s.s.ParkingLotAssetSyncService       : Created parking lot from assets: gachon_ai_1 -> building gachon_ai
+2026-06-05T19:11:26.927+09:00  INFO 197754 --- [    Test worker] c.s.s.s.ParkingLotAssetSyncService       : Created parking lot from assets: gachon_ai_2 -> building gachon_ai
+2026-06-05T19:11:26.935+09:00  INFO 197754 --- [    Test worker] c.s.s.s.ParkingLotAssetSyncService       : Created parking lot from assets: gachon_gradschool -> building gachon_gradschool
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
