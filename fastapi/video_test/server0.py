@@ -29,7 +29,7 @@ MAP_DIR = os.path.join(BASE_DIR, "map")
 YOLO_W, YOLO_H = 854, 480
 FRAME_INTERVAL = 30  # 분석 주기 (프레임)
 SOURCE_SCAN_INTERVAL = 5.0  # 새 영상/슬롯 파일 재탐색 주기(초)
-DEBUG = True         # 실시간 시각화 창 표시 여부
+DEBUG = os.environ.get("SHOW_GUI", "0") == "1"  # 실시간 시각화 창 표시 여부 (SHOW_GUI=1 일 때만)
 
 model = YOLO(WEIGHTS_PATH)
 vehicle_ids = [3, 4, 5, 9] # car, van, truck, bus 등
@@ -302,8 +302,10 @@ def slot_worker():
             
         frame_count += 1
 
-# 분석 스레드 시작
-threading.Thread(target=slot_worker, daemon=True).start()
+# 분석 스레드 시작 (uvicorn server0:app 헤드리스 방식으로 띄울 때만)
+# python server0.py 로 직접 실행하면 메인 스레드에서 slot_worker를 돌려 GUI 창을 띄움
+if __name__ != "__main__":
+    threading.Thread(target=slot_worker, daemon=True).start()
 
 # =====================================================
 # 5. API 엔드포인트
@@ -315,4 +317,10 @@ def get_status():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # 서버는 백그라운드 스레드에서 실행
+    threading.Thread(
+        target=lambda: uvicorn.run(app, host="0.0.0.0", port=8000),
+        daemon=True,
+    ).start()
+    # 분석 루프는 메인 스레드에서 실행 (macOS는 GUI 창을 메인 스레드에서만 띄울 수 있음)
+    slot_worker()
