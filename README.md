@@ -112,22 +112,35 @@ git clone https://github.com/leehnsong/P-Project.git
 cd P-Project
 ```
 
-### 2) FastAPI 의존성 설치 (가상환경 권장)
+### 2) FastAPI 의존성 설치 (가상환경)
+
+> ⚠️ `run.sh`는 venv가 **`fastapi/video_test/venv`** 에 있다고 가정합니다. 아래 경로 그대로 만드세요.
 
 ```bash
-cd fastapi
+cd fastapi/video_test
 python3 -m venv venv
 source venv/bin/activate          # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-cd ..
+cd ../..
 ```
 
-### 3) 환경변수(API 키) 설정
+### 3) 데이터·모델 준비 (필수 — git에 포함되지 않음)
+
+용량/저작권 문제로 아래 파일은 저장소에 없습니다. **별도로 받아서** 해당 위치에 두어야 정상 동작합니다.
+
+| 두는 곳 | 내용 |
+|---|---|
+| `fastapi/video_test/weights/visDrone.pt` | YOLO 가중치. 없으면 FastAPI 시작 시 모델 로드에서 **에러** |
+| `fastapi/video_test/videos/*.mp4` | 분석할 주차장 영상. 파일명이 `map/<key>_slots.json` 과 짝이 맞아야 함 |
+
+> **DB는 비어 있는 상태로 시작합니다.** 등록된 장소/주차장 데이터(H2, `springboot/data/`)는 공유되지 않으므로, 실행 후 **웹 지도에서 직접 장소·주차장을 등록**(영상 업로드)하면 됩니다.
+
+### 4) 환경변수(API 키) 설정
 
 `.env.example`를 참고해 키를 환경변수로 등록합니다 (아래 [환경변수](#환경변수-api-키) 표 참고).
 `run.sh`는 셸 프로필(`~/.zshrc` 등)에 등록된 키를 자동으로 읽어옵니다.
 
-### 4) 백엔드 실행 (Spring Boot + FastAPI 한 번에)
+### 5) 백엔드 실행 (Spring Boot + FastAPI 한 번에)
 
 ```bash
 ./run.sh
@@ -145,11 +158,11 @@ cd springboot && ./gradlew bootRun
 
 # FastAPI (별도 터미널). SHOW_GUI=1 이면 분석 창까지 표시
 cd fastapi/video_test
-SHOW_GUI=1 ../venv/bin/python -m uvicorn server0:app --host 0.0.0.0 --port 8000
+SHOW_GUI=1 ./venv/bin/python server0.py
 ```
 </details>
 
-### 5) 안드로이드 앱 (선택)
+### 6) 안드로이드 앱 (선택)
 
 Android Studio에서 `P_Application/`을 열고 에뮬레이터/실기기로 실행합니다.
 
