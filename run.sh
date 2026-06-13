@@ -19,12 +19,18 @@ SB_LOG="/tmp/p-project-springboot.log"
 export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
 export PATH="$JAVA_HOME/bin:$PATH"
 
-# 네이버 지도 키: 이미 환경에 있으면 그대로 쓰고, 없으면 ~/.zshrc 에서 가져옴
-if [ -z "${SMARTPARKING_NAVER_MAP_CLIENT_ID:-}" ] && [ -f "$HOME/.zshrc" ]; then
-  # shellcheck disable=SC1090
-  NAVER_LINE="$(grep -E '^export SMARTPARKING_NAVER_MAP_CLIENT_ID=' "$HOME/.zshrc" | tail -1 || true)"
-  [ -n "$NAVER_LINE" ] && eval "$NAVER_LINE"
-fi
+# 네이버 키들(지도/검색): 환경에 없으면 ~/.zshrc 의 export 줄을 그대로 가져옴
+load_from_zshrc() {
+  local var="$1"
+  if [ -z "${!var:-}" ] && [ -f "$HOME/.zshrc" ]; then
+    local line
+    line="$(grep -E "^export ${var}=" "$HOME/.zshrc" | tail -1 || true)"
+    [ -n "$line" ] && eval "$line"
+  fi
+}
+load_from_zshrc SMARTPARKING_NAVER_MAP_CLIENT_ID
+load_from_zshrc SMARTPARKING_NAVER_SEARCH_CLIENT_ID
+load_from_zshrc SMARTPARKING_NAVER_SEARCH_CLIENT_SECRET
 
 free_port() {
   local port="$1"
