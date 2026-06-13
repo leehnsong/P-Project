@@ -3,8 +3,10 @@ package com.smartparking.server.service;
 import com.smartparking.server.dto.CampusMapResponse;
 import com.smartparking.server.dto.ParkingLotView;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class VoiceAnswerService {
@@ -18,11 +20,16 @@ public class VoiceAnswerService {
         if (question == null || question.isBlank()) {
             return "무엇을 도와드릴까요?";
         }
-        CampusMapResponse map = campusMapService.getCampusMap();
-        String summary = buildSummary(map);
-        String prompt = buildPrompt(summary, question);
-        String answer = geminiClient.generate(prompt);
-        return (answer == null || answer.isBlank()) ? FALLBACK : answer;
+        try {
+            CampusMapResponse map = campusMapService.getCampusMap();
+            String summary = buildSummary(map);
+            String prompt = buildPrompt(summary, question);
+            String answer = geminiClient.generate(prompt);
+            return (answer == null || answer.isBlank()) ? FALLBACK : answer;
+        } catch (Exception e) {
+            log.warn("음성 답변 생성 실패: {}", e.getMessage());
+            return FALLBACK;
+        }
     }
 
     static String buildSummary(CampusMapResponse map) {
