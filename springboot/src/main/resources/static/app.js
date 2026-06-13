@@ -377,8 +377,23 @@ async function renderSelectedBuilding(buildingId) {
         const lots = detail.parkingLots ?? [];
         const lotsHtml = await renderParkingLotCards(lots);
 
-        elements.detailContent.innerHTML = lotsHtml || "<div class='lot-card'>주차장 정보가 없습니다.</div>";
+        const addFormHtml = state.currentUser
+            ? `
+            <div class="lot-card add-lot-card">
+                <h3>주차장 추가</h3>
+                <form id="add-lot-form" class="add-lot-form">
+                    <input name="name" type="text" placeholder="주차장 이름" required />
+                    <label>영상(필수) <input name="video" type="file" accept="video/*" required /></label>
+                    <label>사진(선택) <input name="image" type="file" accept="image/*" /></label>
+                    <button type="submit">업로드</button>
+                    <span id="add-lot-progress"></span>
+                </form>
+                <button type="button" class="danger" data-delete-building="${building.id}">건물 삭제</button>
+            </div>`
+            : "";
+        elements.detailContent.innerHTML = addFormHtml + (lotsHtml || "<div class='lot-card'>주차장 정보가 없습니다.</div>");
         bindParkingLotActions(lots);
+        bindBuildingDetailActions(building.id);
         elements.updateBadge.textContent = `갱신 시각: ${formatTimestamp(getLatestUpdate(lots))}`;
 
         focusMarker(buildingId);
@@ -485,6 +500,7 @@ async function renderParkingLotCard(lot) {
                         : "먼저 사진을 업로드한 뒤 지도 제작을 실행하세요."}
                 </p>
             </section>
+            ${state.currentUser ? `<button type="button" class="danger" data-delete-lot="${lot.id}">주차장 삭제</button>` : ""}
         </article>
     `;
 }
@@ -743,6 +759,23 @@ function bindParkingLotActions(lots) {
                 }
             });
         }
+    });
+
+    document.querySelectorAll("[data-delete-lot]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+            const lotId = Number(btn.dataset.deleteLot);
+            if (!window.confirm("이 주차장을 삭제할까요?")) {
+                return;
+            }
+            try {
+                await apiRequest(`/api/parking-lots/${lotId}`, { method: "DELETE" });
+                if (state.selectedBuildingId) {
+                    await renderSelectedBuilding(state.selectedBuildingId);
+                }
+            } catch (error) {
+                window.alert(`주차장 삭제 실패: ${error.message}`);
+            }
+        });
     });
 }
 
@@ -1095,4 +1128,64 @@ function escapeHtml(value) {
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#39;");
+}
+
+function bindBuildingDetailActions(buildingId) {
+    const form = document.getElementById("add-lot-form");
+    if (form) {
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            submitAddParkingLot(buildingId, form);
+        });
+    }
+    const deleteBuildingBtn = document.querySelector(`[data-delete-building="${buildingId}"]`);
+    if (deleteBuildingBtn) {
+        deleteBuildingBtn.addEventListener("click", () => deleteBuilding(buildingId));
+    }
+}
+
+async function submitAddParkingLot(buildingId, form) {
+    const progress = document.getElementById("add-lot-progress");
+    const data = new FormData();
+    data.set("name", form.elements.name.value.trim());
+    if (form.elements.video.files[0]) {
+        data.set("video", form.elements.video.files[0]);
+    }
+    if (form.elements.image.files[0]) {
+        data.set("image", form.elements.image.files[0]);
+    }
+    try {
+        if (progress) {
+            progress.textContent = "업로드 중...";
+        }
+        await apiRequest(`/api/buildings/${buildingId}/parking-lots`, {
+            method: "POST",
+            body: data,
+        });
+        if (progress) {
+            progress.textContent = "완료";
+        }
+        await renderSelectedBuilding(buildingId);
+    } catch (error) {
+        if (progress) {
+            progress.textContent = "";
+        }
+        window.alert(`주차장 추가 실패: ${error.message}`);
+    }
+}
+
+async function deleteBuilding(buildingId) {
+    if (!window.confirm("이 건물과 하위 주차장을 모두 삭제할까요?")) {
+        return;
+    }
+    try {
+        await apiRequest(`/api/buildings/${buildingId}`, { method: "DELETE" });
+        state.campusMap = await fetchJson("/api/campus/map");
+        state.selectedBuildingId = null;
+        renderBuildingList();
+        recreateMarkers();
+        elements.detailContent.innerHTML = "<div class='lot-card'>건물을 선택하세요.</div>";
+    } catch (error) {
+        window.alert(`건물 삭제 실패: ${error.message}`);
+    }
 }
