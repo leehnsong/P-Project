@@ -39,6 +39,7 @@ const elements = {
 
 document.addEventListener("DOMContentLoaded", () => {
     bindAuthActions();
+    bindVoice();
     bootstrap().catch((error) => {
         console.error(error);
         elements.configBadge.textContent = "초기화 실패";
@@ -1191,4 +1192,82 @@ async function deleteBuilding(buildingId) {
     } catch (error) {
         window.alert(`건물 삭제 실패: ${error.message}`);
     }
+}
+
+function getSpeechRecognition() {
+    return window.SpeechRecognition || window.webkitSpeechRecognition || null;
+}
+
+function bindVoice() {
+    const button = document.getElementById("voice-button");
+    const output = document.getElementById("voice-output");
+    if (!button) {
+        return;
+    }
+    const Recognition = getSpeechRecognition();
+    if (!Recognition || !("speechSynthesis" in window)) {
+        button.disabled = true;
+        button.textContent = "🎤 음성 미지원 브라우저";
+        return;
+    }
+    button.addEventListener("click", () => startVoiceQuery(button, output, Recognition));
+}
+
+function startVoiceQuery(button, output, Recognition) {
+    const recognition = new Recognition();
+    recognition.lang = "ko-KR";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    button.disabled = true;
+    if (output) {
+        output.textContent = "🎙️ 듣는 중...";
+    }
+
+    recognition.onresult = async (event) => {
+        const question = event.results[0][0].transcript;
+        if (output) {
+            output.textContent = `질문: ${question}`;
+        }
+        try {
+            const result = await apiRequest("/api/voice/ask", {
+                method: "POST",
+                body: JSON.stringify({ question }),
+            });
+            const answer = result?.answer ?? "답변을 받지 못했어요.";
+            if (output) {
+                output.textContent = `Q: ${question} / A: ${answer}`;
+            }
+            speak(answer);
+        } catch (error) {
+            if (output) {
+                output.textContent = `오류: ${error.message}`;
+            }
+        } finally {
+            button.disabled = false;
+        }
+    };
+
+    recognition.onerror = () => {
+        if (output) {
+            output.textContent = "잘 못 들었어요. 다시 시도해 주세요.";
+        }
+        button.disabled = false;
+    };
+
+    recognition.onend = () => {
+        button.disabled = false;
+    };
+
+    recognition.start();
+}
+
+function speak(text) {
+    if (!("speechSynthesis" in window)) {
+        return;
+    }
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "ko-KR";
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
 }
