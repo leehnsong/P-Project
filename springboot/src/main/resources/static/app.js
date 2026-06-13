@@ -389,7 +389,7 @@ async function renderSelectedBuilding(buildingId) {
                     <button type="submit">업로드</button>
                     <span id="add-lot-progress"></span>
                 </form>
-                <button type="button" class="danger" data-delete-building="${building.id}">건물 삭제</button>
+                <button type="button" class="danger" data-delete-building="${building.id}">장소 삭제</button>
             </div>`
             : "";
         elements.detailContent.innerHTML = addFormHtml + (lotsHtml || "<div class='lot-card'>주차장 정보가 없습니다.</div>");
@@ -399,7 +399,7 @@ async function renderSelectedBuilding(buildingId) {
 
         focusMarker(buildingId);
     } catch (error) {
-        elements.detailContent.innerHTML = `<div class="lot-card">건물 정보를 불러오지 못했습니다.<br>${escapeHtml(error.message)}</div>`;
+        elements.detailContent.innerHTML = `<div class="lot-card">장소 정보를 불러오지 못했습니다.<br>${escapeHtml(error.message)}</div>`;
     }
 }
 
@@ -784,7 +784,7 @@ async function renderMapIfPossible() {
     const clientId = state.config?.naverMapClientId?.trim();
     if (!clientId) {
         elements.mapFallback.classList.remove("hidden");
-        elements.mapFallback.innerHTML = "네이버 지도 클라이언트 ID가 설정되지 않았습니다.<br>건물 선택과 상태 확인은 계속 사용할 수 있습니다.";
+        elements.mapFallback.innerHTML = "네이버 지도 클라이언트 ID가 설정되지 않았습니다.<br>장소 선택과 상태 확인은 계속 사용할 수 있습니다.";
         return;
     }
 
@@ -841,7 +841,7 @@ function createNaverMap() {
 
     naver.maps.Event.addListener(state.map, "click", (e) => {
         if (!state.currentUser) {
-            window.alert("건물 등록은 로그인 후 가능합니다.");
+            window.alert("장소 등록은 로그인 후 가능합니다.");
             return;
         }
         promptCreateBuilding(e.coord.lat(), e.coord.lng());
@@ -885,7 +885,7 @@ function focusMarker(buildingId) {
 }
 
 async function promptCreateBuilding(lat, lng) {
-    const name = window.prompt("건물 이름을 입력하세요");
+    const name = window.prompt("장소 이름을 입력하세요");
     if (name === null || name.trim() === "") {
         return;
     }
@@ -898,7 +898,7 @@ async function promptCreateBuilding(lat, lng) {
         renderBuildingList();
         recreateMarkers();
     } catch (error) {
-        window.alert(`건물 등록 실패: ${error.message}`);
+        window.alert(`장소 등록 실패: ${error.message}`);
     }
 }
 
@@ -1179,7 +1179,7 @@ async function submitAddParkingLot(buildingId, form) {
 }
 
 async function deleteBuilding(buildingId) {
-    if (!window.confirm("이 건물과 하위 주차장을 모두 삭제할까요?")) {
+    if (!window.confirm("이 장소과 하위 주차장을 모두 삭제할까요?")) {
         return;
     }
     try {
@@ -1188,9 +1188,9 @@ async function deleteBuilding(buildingId) {
         state.selectedBuildingId = null;
         renderBuildingList();
         recreateMarkers();
-        elements.detailContent.innerHTML = "<div class='lot-card'>건물을 선택하세요.</div>";
+        elements.detailContent.innerHTML = "<div class='lot-card'>장소을 선택하세요.</div>";
     } catch (error) {
-        window.alert(`건물 삭제 실패: ${error.message}`);
+        window.alert(`장소 삭제 실패: ${error.message}`);
     }
 }
 

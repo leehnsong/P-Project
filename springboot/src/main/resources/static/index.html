@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>가천대학교 주차 현황</title>
+    <title>말해주차</title>
     <link rel="stylesheet" href="/app.css">
 </head>
 <body>
 <div class="app-shell">
     <header class="hero">
         <div>
-            <p class="eyebrow">Smart Parking Campus View</p>
-            <h1>가천대학교 캠퍼스 주차 현황</h1>
+            <p class="eyebrow">Smart Parking Voice Assistant</p>
+            <h1>말해주차</h1>
             <p class="hero-copy">
-                캠퍼스 전체 지도에서 건물을 선택하고, 연결된 주차장의 현재 점유 상태를 바로 확인합니다.
+                지도에서 장소를 선택하거나 음성으로 물어, 주차장의 현재 점유 상태를 바로 확인하세요.
             </p>
         </div>
         <div class="hero-meta">
@@ -59,8 +59,8 @@
 
             <section class="panel">
                 <div class="panel-head">
-                    <h2>건물 선택</h2>
-                    <p>선택한 건물의 주차장 상태가 오른쪽에 표시됩니다.</p>
+                    <h2>장소 선택</h2>
+                    <p>선택한 장소의 주차장 상태가 오른쪽에 표시됩니다.</p>
                 </div>
                 <div id="building-list" class="building-list"></div>
             </section>
@@ -69,7 +69,7 @@
         <section class="content">
             <section class="panel map-panel">
                 <div class="panel-head">
-                    <h2>캠퍼스 지도</h2>
+                    <h2>지도</h2>
                     <p>네이버 지도 API 키가 있으면 실제 지도가 표시됩니다.</p>
                 </div>
                 <div class="map-search">
@@ -86,8 +86,8 @@
 
             <section class="panel detail-panel">
                 <div class="panel-head">
-                    <h2 id="detail-title">건물 상세</h2>
-                    <p id="detail-subtitle">건물을 선택하면 주차장 정보가 나타납니다.</p>
+                    <h2 id="detail-title">장소 상세</h2>
+                    <p id="detail-subtitle">장소를 선택하면 주차장 정보가 나타납니다.</p>
                 </div>
                 <div id="detail-content" class="detail-content"></div>
             </section>
