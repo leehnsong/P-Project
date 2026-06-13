@@ -389,10 +389,12 @@ async function renderSelectedBuilding(buildingId) {
                     <button type="submit">업로드</button>
                     <span id="add-lot-progress"></span>
                 </form>
-                <button type="button" class="danger" data-delete-building="${building.id}">장소 삭제</button>
             </div>`
             : "";
-        elements.detailContent.innerHTML = addFormHtml + (lotsHtml || "<div class='lot-card'>주차장 정보가 없습니다.</div>");
+        const deleteBuildingHtml = state.currentUser
+            ? `<button type="button" class="danger building-delete-btn" data-delete-building="${building.id}">🗑 이 위치(건물) 삭제</button>`
+            : "";
+        elements.detailContent.innerHTML = addFormHtml + (lotsHtml || "<div class='lot-card'>주차장 정보가 없습니다.</div>") + deleteBuildingHtml;
         bindParkingLotActions(lots);
         bindBuildingDetailActions(building.id);
         elements.updateBadge.textContent = `갱신 시각: ${formatTimestamp(getLatestUpdate(lots))}`;
