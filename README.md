@@ -1,55 +1,167 @@
 # 말해주차 (Smart Parking)
 
-YOLO 영상분석으로 주차 점유를 자동 감지하고, 그 현황을 **웹과 안드로이드 앱**에서 지도·검색·음성으로 확인하는 스마트 주차 시스템입니다.
+> YOLO 영상분석으로 주차 점유를 자동 감지하고, 그 현황을 **웹과 안드로이드 앱**에서 지도·검색·음성으로 확인하는 스마트 주차 시스템
 
-## 구성
+영상에서 차량을 탐지해 빈자리를 실시간 계산하고, 사용자는 지도에서 주차장을 찾거나 *"AI공학관 빈자리 있어?"* 처럼 음성으로 물어볼 수 있습니다.
 
-| 폴더 | 설명 | 기술 |
-|---|---|---|
-| `fastapi/` | YOLO 추론 서버 — 영상에서 차량 탐지 → 슬롯 점유 계산 (`/status`) | Python, FastAPI, Ultralytics YOLO, OpenCV |
-| `springboot/` | 캠퍼스/건물/주차장 API + 웹 UI + 인증 + 음성·검색 프록시 | Java 17, Spring Boot 4, JPA, H2, Spring Security |
-| `P_Application/` | 안드로이드 앱 (위 백엔드를 호출하는 모바일 클라이언트) | Android(Java), Retrofit, 네이버 지도 SDK |
-| `docs/` | 설계·구현 계획 문서 | — |
+---
 
-> 셋은 코드 공유가 아니라 **HTTP REST API**로 연결됩니다.
+## 데모
+
+### 전체 시연 영상
+
+<!-- ▼▼▼ 여기에 데모 영상을 넣으세요 ▼▼▼
+   동영상(mp4)은 상대경로로는 재생이 안 됩니다.
+   github.com 에서 이 README "편집(연필)" 화면 또는 아무 이슈/PR 댓글창에
+   mp4 파일을 드래그&드롭 → 자동 생성되는 https://github.com/user-attachments/assets/... 링크를
+   복사해서 아래 줄에 그대로 붙여넣으면 인라인 플레이어로 재생됩니다.
+
+   예) https://github.com/user-attachments/assets/xxxxxxxx-xxxx-xxxx
+▲▲▲ -->
+
+_📹 전체 시연 영상을 여기에 추가하세요 (앱 실행 → 지도/현황 → 음성 질의 → 내 주차 저장 흐름 권장)_
+
+### 영상분석 파이프라인
+
+| 1. 원본 영상 | 2. YOLO 차량 탐지 | 3. 앱 주차 현황 |
+|:---:|:---:|:---:|
+| ![원본](result/result1.png) | ![탐지](result/result3.png) | ![앱](result/result2.png) |
+| 주차장을 촬영한 입력 영상 | 차량을 탐지해 점유 슬롯 계산 | 슬롯별 여유/점유 + 잔여 대수 |
+
+> 슬롯 색: 🟩 가능 · 🟥 점유 · 🟨 장애인 구역. 구역(파티션)별로 탭해서 볼 수 있습니다.
+
+---
 
 ## 주요 기능
 
-- **점유 감지**: YOLO가 영상에서 차량을 탐지해 주차장별 빈자리/총칸 계산
-- **지도 기반 등록(웹)**: 지도에서 위치를 클릭해 건물·주차장을 동적 등록(영상 업로드), 삭제. 데이터는 영속 저장
+- **점유 감지**: YOLO가 영상에서 차량을 탐지해 주차장별 빈자리/총칸 계산 (추론 주기 약 5초)
+- **지도 기반 등록(웹)**: 지도에서 위치를 클릭해 장소·주차장을 동적 등록(영상 업로드)·삭제. 데이터는 영속 저장
 - **장소 검색**: 장소명 검색(네이버 지역검색)으로 지도 이동
-- **음성 질의**: "AI공학관 빈자리 있어?" 음성 질문 → LLM(Gemini)이 현황 기반 자연어 답변 → 음성 출력 (웹·앱)
-- **앱**: 지도 핀→주차장별 현황(여유/혼잡/만차), 슬롯 사진 오버레이, 즐겨찾기, 내 주차위치 저장/추적, 빈자리 알림·알림함
+- **음성 질의**: 음성 질문 → LLM(Gemini)이 현황 기반 자연어 답변 → 음성 출력 (웹·앱)
+- **앱**: 지도 핀 → 주차장별 현황(여유/혼잡/만차), 슬롯 사진 오버레이, 즐겨찾기, 내 주차위치 저장·추적, 빈자리 알림·알림함
 
-## 실행 방법
+---
 
-### 백엔드 (Spring Boot + FastAPI)
+## 결과 화면
 
-루트의 통합 스크립트로 한 번에 실행합니다.
+> 아래 회색 타일은 **플레이스홀더**입니다. `docs/screenshots/` 안의 **같은 파일명으로 실제 스크린샷을 덮어쓰면** 자동으로 표시됩니다. (마크다운 수정 불필요. GIF로 바꾸려면 파일 확장자에 맞춰 README 경로만 `.gif`로 변경)
+
+### 앱
+
+| 홈 화면 | 지도 + 핀 (주차장 현황) | 슬롯 사진 오버레이 |
+|:---:|:---:|:---:|
+| ![홈](docs/screenshots/app-home.png) | ![지도](docs/screenshots/app-map.png) | ![슬롯](docs/screenshots/app-slot.png) |
+
+| 음성 질의 | 내 주차 위치 | 빈자리 알림 / 알림함 |
+|:---:|:---:|:---:|
+| ![음성](docs/screenshots/app-voice.png) | ![내주차](docs/screenshots/app-parking.png) | ![알림](docs/screenshots/app-alert.png) |
+
+### 웹
+
+| 지도에서 핀 찍어 장소·주차장 등록 | 웹 주차 현황 |
+|:---:|:---:|
+| ![웹등록](docs/screenshots/web-register.png) | ![웹현황](docs/screenshots/web-status.png) |
+
+---
+
+## 아키텍처 / 폴더 구조
+
+```
+P-Project/
+├─ fastapi/        YOLO 추론 서버 (영상 → 슬롯 점유)
+├─ springboot/     API + 웹 UI + 인증 + 음성·검색 프록시
+├─ P_Application/  안드로이드 앱 (백엔드 호출 모바일 클라이언트)
+├─ docs/           설계·구현 계획 문서
+└─ run.sh          백엔드 통합 실행 스크립트
+```
+
+| 폴더 | 설명 | 기술 |
+|---|---|---|
+| `fastapi/` | 영상에서 차량 탐지 → 슬롯 점유 계산 (`/status`) | Python, FastAPI, Ultralytics YOLO, OpenCV |
+| `springboot/` | 장소/주차장 API + 웹 UI + 인증 + 음성·검색 프록시 | Java 17, Spring Boot 4, JPA, H2, Spring Security |
+| `P_Application/` | 안드로이드 앱 | Android(Java), Retrofit, 네이버 지도 SDK |
+
+> 세 컴포넌트는 코드 공유가 아니라 **HTTP REST API**로 연결됩니다.
+> 앱·웹 → Spring Boot(8080) → FastAPI(8000).
+
+---
+
+## 사전 준비 (Prerequisites)
+
+| 도구 | 버전 | 용도 |
+|---|---|---|
+| Java (JDK) | 17 | Spring Boot |
+| Python | 3.10+ | FastAPI / YOLO |
+| Android Studio | 최신 | 앱 빌드(선택) |
+| API 키 | — | 네이버 지도/검색, Gemini (아래 환경변수) |
+
+```bash
+# macOS 예시
+brew install openjdk@17
+python3 --version   # 3.10 이상인지 확인
+```
+
+---
+
+## 설치 & 실행
+
+### 1) 저장소 받기
+
+```bash
+git clone https://github.com/leehnsong/P-Project.git
+cd P-Project
+```
+
+### 2) FastAPI 의존성 설치 (가상환경 권장)
+
+```bash
+cd fastapi
+python3 -m venv venv
+source venv/bin/activate          # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+cd ..
+```
+
+### 3) 환경변수(API 키) 설정
+
+`.env.example`를 참고해 키를 환경변수로 등록합니다 (아래 [환경변수](#환경변수-api-키) 표 참고).
+`run.sh`는 셸 프로필(`~/.zshrc` 등)에 등록된 키를 자동으로 읽어옵니다.
+
+### 4) 백엔드 실행 (Spring Boot + FastAPI 한 번에)
 
 ```bash
 ./run.sh
 ```
 
-- Spring Boot 웹: `http://localhost:8080/`
-- FastAPI(YOLO): `http://localhost:8000/`
-- `run.sh`가 Java 17 경로와 네이버/Gemini API 키(환경변수)를 자동으로 로드합니다.
+- Spring Boot 웹: <http://localhost:8080/>
+- FastAPI(YOLO): <http://localhost:8000/>
 
-개별 실행:
+<details>
+<summary>개별 실행 / 영상 분석 창 보기</summary>
 
 ```bash
 # Spring Boot
 cd springboot && ./gradlew bootRun
-# FastAPI (별도 터미널, 영상 분석 창까지: SHOW_GUI=1)
-cd fastapi/video_test && ./venv/bin/python -m uvicorn server0:app --host 0.0.0.0 --port 8000
-```
 
-### 안드로이드 앱 (P_Application)
+# FastAPI (별도 터미널). SHOW_GUI=1 이면 분석 창까지 표시
+cd fastapi/video_test
+SHOW_GUI=1 ../venv/bin/python -m uvicorn server0:app --host 0.0.0.0 --port 8000
+```
+</details>
+
+### 5) 안드로이드 앱 (선택)
 
 Android Studio에서 `P_Application/`을 열고 에뮬레이터/실기기로 실행합니다.
 
+- **네이버 지도 키 설정**: `P_Application/local.properties`(git 미추적)에 아래 한 줄을 추가하세요.
+  ```properties
+  NAVER_MAP_CLIENT_ID=발급받은_NCP_KEY_ID
+  ```
+  (또는 환경변수 `SMARTPARKING_NAVER_MAP_CLIENT_ID` 로도 인식됩니다. Android Studio를 아이콘으로 실행하면 환경변수를 못 읽으므로 `local.properties` 권장.)
 - 앱은 에뮬레이터 기준 `http://10.0.2.2:8080`(= PC의 localhost)으로 백엔드를 호출합니다.
 - 따라서 앱 실행 전 **백엔드(`./run.sh`)가 켜져 있어야** 합니다.
+
+---
 
 ## 환경변수 (API 키)
 
@@ -62,6 +174,8 @@ Android Studio에서 `P_Application/`을 열고 에뮬레이터/실기기로 실
 | `SMARTPARKING_GEMINI_API_KEY` | 음성 질의 답변 생성(Gemini) |
 | `SMARTPARKING_JWT_SECRET` | 로그인 JWT 서명 |
 
+---
+
 ## 주요 API (요약)
 
 - 조회: `GET /api/campus/map`, `GET /api/campus/buildings/{id}`
@@ -71,4 +185,4 @@ Android Studio에서 `P_Application/`을 열고 에뮬레이터/실기기로 실
 - 인증: `POST /auth/login`, `POST /auth/register`
 - 내 정보(로그인 필요): `/api/me/parking-location`, `/api/me/alert-rules`, `/api/me/notifications`
 
-자세한 설계는 `docs/` 참고.
+자세한 설계는 [`docs/`](docs/) 참고.

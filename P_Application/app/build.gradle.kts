@@ -1,5 +1,21 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
+}
+
+// 네이버 지도 클라이언트 ID는 소스에 하드코딩하지 않는다.
+// 우선순위: local.properties(권장, Android Studio용) → gradle property → 환경변수(터미널/run.sh용)
+val naverMapClientId: String = run {
+    val props = Properties()
+    val localFile = rootProject.file("local.properties")
+    if (localFile.exists()) {
+        localFile.inputStream().use { props.load(it) }
+    }
+    props.getProperty("NAVER_MAP_CLIENT_ID")
+        ?: providers.gradleProperty("NAVER_MAP_CLIENT_ID").orNull
+        ?: System.getenv("SMARTPARKING_NAVER_MAP_CLIENT_ID")
+        ?: ""
 }
 
 android {
@@ -12,8 +28,7 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-        manifestPlaceholders["naverMapClientId"] =
-            providers.gradleProperty("NAVER_MAP_CLIENT_ID").orNull ?: ""
+        manifestPlaceholders["naverMapClientId"] = naverMapClientId
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
