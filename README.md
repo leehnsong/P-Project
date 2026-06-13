@@ -8,25 +8,20 @@
 
 ## 데모
 
-> 아래 세 영상은 **GitHub 웹에서 직접 업로드**해야 인라인 플레이어로 재생됩니다 (레포에 커밋한 mp4는 재생 안 되고 링크만 됨).
-> **올리는 법**: github.com 에서 이 README "편집(✏️)" 화면을 열고, 각 영상 자리 아래에 해당 mp4 파일을 **드래그&드롭** →
-> 자동 생성되는 `https://github.com/user-attachments/assets/...` 링크가 그 자리에 박힙니다. 그 줄의 안내 문구는 지우세요.
-> 업로드용 압축본은 이미 만들어 두었습니다 → `result/web_upload/` (앱/웹은 배속, 음성은 소리 포함).
+### 📱 앱 시연 
 
-### 📱 앱 시연 _(2배속)_
+https://github.com/user-attachments/assets/45ec23cd-3f46-4bfd-8b5b-ca47ef2af78d
 
-<!-- 여기에 result/web_upload/app-demo.mp4 를 드래그&드롭 -->
-_▶︎ 앱 시연 영상 (`result/web_upload/app-demo.mp4`) — 이 줄 위에 업로드_
 
-### 🖥️ 웹 시연 _(2.5배속)_
+### 🖥️ 웹 시연 
 
-<!-- 여기에 result/web_upload/web-demo.mp4 를 드래그&드롭 -->
-_▶︎ 웹 시연 영상 (`result/web_upload/web-demo.mp4`) — 이 줄 위에 업로드_
+https://github.com/user-attachments/assets/75c39284-f4ce-4d63-8e52-62084096cfc9
+
 
 ### 🎤 음성 질의 _(실시간 · 소리 포함)_
 
-<!-- 여기에 result/web_upload/voice-demo.mp4 를 드래그&드롭 -->
-_▶︎ 음성 질의 영상 (`result/web_upload/voice-demo.mp4`) — 이 줄 위에 업로드_
+https://github.com/user-attachments/assets/24441991-839a-4149-a5fb-b14758774339
+
 
 ---
 
