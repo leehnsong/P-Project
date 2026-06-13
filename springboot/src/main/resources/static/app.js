@@ -766,7 +766,7 @@ async function loadNaverMapScript(clientId) {
     await new Promise((resolve, reject) => {
         const script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${encodeURIComponent(clientId)}&language=ko`;
+        script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${encodeURIComponent(clientId)}&submodules=geocoder&language=ko`;
         script.onload = resolve;
         script.onerror = () => reject(new Error("Naver Map script load failed"));
         document.head.appendChild(script);
@@ -805,11 +805,21 @@ function createNaverMap() {
         return marker;
     });
 
+    naver.maps.Event.addListener(state.map, "click", (e) => {
+        if (!state.currentUser) {
+            window.alert("건물 등록은 로그인 후 가능합니다.");
+            return;
+        }
+        promptCreateBuilding(e.coord.lat(), e.coord.lng());
+    });
+
     elements.mapFallback.classList.add("hidden");
 
     if (state.selectedBuildingId) {
         focusMarker(state.selectedBuildingId);
     }
+
+    bindMapSearch();
 }
 
 function focusMarker(buildingId) {
@@ -838,6 +848,73 @@ function focusMarker(buildingId) {
             state.infoWindow.open(state.map, marker);
         }
     }
+}
+
+async function promptCreateBuilding(lat, lng) {
+    const name = window.prompt("건물 이름을 입력하세요");
+    if (name === null || name.trim() === "") {
+        return;
+    }
+    try {
+        await apiRequest("/api/buildings", {
+            method: "POST",
+            body: JSON.stringify({ name: name.trim(), lat, lng }),
+        });
+        state.campusMap = await fetchJson("/api/campus/map");
+        renderBuildingList();
+        recreateMarkers();
+    } catch (error) {
+        window.alert(`건물 등록 실패: ${error.message}`);
+    }
+}
+
+function recreateMarkers() {
+    if (!state.map || !window.naver?.maps) {
+        return;
+    }
+    state.markers.forEach((m) => m.setMap(null));
+    state.markerByBuildingId.clear();
+    state.markers = (state.campusMap?.buildings ?? []).map((building) => {
+        const marker = new naver.maps.Marker({
+            position: new naver.maps.LatLng(building.lat, building.lng),
+            map: state.map,
+            title: building.name,
+        });
+        naver.maps.Event.addListener(marker, "click", () => renderSelectedBuilding(building.id));
+        state.markerByBuildingId.set(building.id, marker);
+        return marker;
+    });
+}
+
+function bindMapSearch() {
+    const input = document.getElementById("map-search-input");
+    const button = document.getElementById("map-search-button");
+    if (!input || !button) {
+        return;
+    }
+    const run = () => searchAndMove(input.value.trim());
+    button.addEventListener("click", run);
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            run();
+        }
+    });
+}
+
+function searchAndMove(query) {
+    if (!query || !window.naver?.maps?.Service) {
+        return;
+    }
+    naver.maps.Service.geocode({ query }, (status, response) => {
+        if (status !== naver.maps.Service.Status.OK || !response.v2.addresses.length) {
+            window.alert("검색 결과가 없습니다.");
+            return;
+        }
+        const item = response.v2.addresses[0];
+        const latLng = new naver.maps.LatLng(Number(item.y), Number(item.x));
+        state.map.setCenter(latLng);
+        state.map.setZoom(18);
+    });
 }
 
 async function fetchJson(url, options = {}) {
