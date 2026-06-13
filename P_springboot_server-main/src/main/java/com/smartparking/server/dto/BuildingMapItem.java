@@ -1,0 +1,17 @@
+package com.smartparking.server.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+public class BuildingMapItem {
+    private Long id;
+    private String name;
+    private String mapKey;
+    private Double lat;
+    private Double lng;
+    private List<ParkingLotSummary> parkingLots;
+}

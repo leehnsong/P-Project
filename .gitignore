@@ -1,3 +1,19 @@
 parking-space-counter/
 video_test/videos/*.mp4
 video_test/weights/visDrone.pt
+
+# Android / Gradle local files
+**/.gradle/
+**/build/
+**/local.properties
+**/*.iml
+**/.idea/
+**/captures/
+**/.externalNativeBuild/
+**/.cxx/
+**/*.apk
+**/output.json
+
+# Logs and OS files
+*.log
+.DS_Store
