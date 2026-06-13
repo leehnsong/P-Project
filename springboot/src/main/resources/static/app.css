@@ -852,8 +852,29 @@ pre.code {
     }
 }
 
-.map-search { display: flex; gap: 8px; margin-bottom: 8px; }
-.map-search input { flex: 1; padding: 6px 8px; }
+.map-search { display: flex; gap: 6px; margin: 0 18px 10px; max-width: 300px; }
+.map-search input {
+    flex: 1;
+    padding: 8px 14px;
+    border: 1px solid var(--panel-border);
+    border-radius: 999px;
+    background: white;
+    color: var(--text);
+    font-size: 0.85rem;
+    outline: none;
+}
+.map-search input:focus { border-color: var(--accent); }
+.map-search button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
 .add-lot-card .add-lot-form { display: flex; flex-direction: column; gap: 6px; }
 .add-lot-card label { font-size: 0.85rem; color: #475467; }
 button.danger { background: #d92d20; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; }
